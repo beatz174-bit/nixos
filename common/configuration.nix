@@ -45,4 +45,8 @@ users.users.root = {
 
   # Enable the OpenSSH daemon.
   services.openssh.enable = true;
+
+  #Enable flakes
+
+  experimental-features = nix-command flakes
 }
