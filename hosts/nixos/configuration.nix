@@ -12,6 +12,7 @@ in {
       nodejs
       appimage-run
       seahorse
+      Remove `brasero` if present
     ];
 
 
