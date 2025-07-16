@@ -57,7 +57,7 @@ nix.settings = {
 #    "https://cache.nixos.org/"
   ];
   trusted-public-keys = [
-    "nix-ccache-1:<base32‑pubkey‑hash‑from‑cache-pub.pem>"
+    "cache.local-1:usoWYanY3Kpq2+kDIS2nhWoLZiRxanmdysdzqCFBHW4="
     "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
   ];
 };
