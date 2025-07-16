@@ -72,7 +72,7 @@ nix.settings = {
     enable = true;
     package = pkgs.git.override { withLibsecret = true; };
     config = {
-      credential.helper = "/etc/profiles/per-user/nixos/bin/git-credential-libsecret";
+      credential.helper = "/run/current-system/sw/bin/git-credential-libsecret";
     };
   };
 
