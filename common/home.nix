@@ -20,9 +20,9 @@ in {
 
   programs.home-manager.enable = true;  # mandatory to activate HM
 
-    programs.bash.shellAliases = {
-    Switch-nix = mySwitchCmd;
-    Test-nix = myTestCmd;
+    programs.bash.aliases = {
+    "Switch-nix" = mySwitchCmd;
+    "Test-nix" = myTestCmd;
   };
 
   
