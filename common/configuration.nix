@@ -54,7 +54,7 @@ users.users.root = {
 nix.settings = {
   substituters = [
     "http://nix-cache"
-    "https://cache.nixos.org/"
+#    "https://cache.nixos.org/"
   ];
   trusted-public-keys = [
     "nix-ccache-1:<base32‑pubkey‑hash‑from‑cache-pub.pem>"
