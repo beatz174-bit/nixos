@@ -11,9 +11,19 @@
     ];
 
   networking.hostName = "nix-cache"; # Define your hostname.
-  virtualisation.docker.enable = true;
 
+  services.nix-serve.enable = true;
+  services.nix-serve.secretKeyFile = "/etc/nix/cache-priv.pem";
 
+  services.nginx = {
+    enable = true;
+    recommendedProxySettings = true;
+    virtualHosts."cache.local" = {
+      locations."/".proxyPass = "http://${config.services.nix-serve.bindAddress}:${toString config.services.nix-serve.port}";
+    };
+  };
+
+  networking.firewall.allowedTCPPorts = [ config.services.nginx.defaultHTTPListenPort ];
   # Open ports in the firewall.
 #  networking.firewall.allowedTCPPorts = [ 80 8080 443 ];
   # networking.firewall.allowedUDPPorts = [ ... ];
