@@ -23,6 +23,7 @@
   vim
   btop
   git
+  gcr
   ];
 #Set root password
 users.users.root = {
@@ -50,6 +51,11 @@ users.users.root = {
 
   nix.settings.experimental-features = "nix-command flakes";
 
+services.gnome.gnome-keyring.enable = true;
+security.pam.services.login.enableGnomeKeyring = true;
+
+
+
 nix.settings = {
   substituters = [
     "http://nix-cache"
@@ -65,8 +71,8 @@ nix.settings = {
   programs.git = {
     enable = true;
     package = pkgs.git.override { withLibsecret = true; };
-    extraConfig = {
-      credential.helper = "libsecret";
+    config = {
+      credential.helper = "/etc/profiles/per-user/nixos/bin/git-credential-libsecret";
     };
   };
 
