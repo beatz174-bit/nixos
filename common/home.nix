@@ -32,6 +32,12 @@ programs.bash = {
   '';
 };
   
+  home.file = {
+    ".config/nix/nix.conf".text = ''
+      access-tokens = github.com=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
+    '';
+  };
+
   # Optional: packages
   home.packages = with pkgs; [
     git
