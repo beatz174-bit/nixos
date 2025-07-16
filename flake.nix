@@ -12,6 +12,11 @@
 
   outputs = { self, nixpkgs, nixos-conf-editor, home-manager, ... } @ inputs:
     let system = "x86_64-linux"; in {
+      nixConfig = {
+        access-tokens = [
+          "github.com=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"
+        ];
+      };           
       nixosConfigurations = {
         # automatically use each host folder by name
         nixos    = nixpkgs.lib.nixosSystem {
@@ -66,11 +71,7 @@
                       home-manager.users.nixos = import ./common/home.nix;
                     }
                    ];
-                    nixConfig = {
-                      access-tokens = [
-                        "github.com=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"
-                      ];
-                    };                   
+        
                  };
 
       };
