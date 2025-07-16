@@ -11,20 +11,7 @@
   };
 
   outputs = { self, nixpkgs, nixos-conf-editor, home-manager, ... } @ inputs:
-    let system = "x86_64-linux";
-          # Import nixpkgs with our overlay applied
-      pkgs = import nixpkgs {
-        inherit system;
-        overlays = [
-          # Your dvdauthor patch overlay
-          (final: prev: {
-            dvdauthor = prev.dvdauthor.overrideAttrs (old: {
-              nativeBuildInputs = (old.nativeBuildInputs or []) ++ [ prev.gettext ];
-            });
-          })
-        ];
-      };
-    in {
+    let system = "x86_64-linux"; in {
       nixosConfigurations = {
         # automatically use each host folder by name
         nixos    = nixpkgs.lib.nixosSystem {
@@ -36,7 +23,9 @@
                       home-manager.useGlobalPkgs = true;
                       home-manager.useUserPackages = true;
                       home-manager.users.nixos = import ./hosts/nixos/home.nix;
+                      
                     }
+                      ./overlay.nix
                    ];
                   specialArgs = { inherit inputs; };
                  };
