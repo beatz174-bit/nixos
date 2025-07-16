@@ -25,7 +25,7 @@
                       home-manager.users.nixos = import ./hosts/nixos/home.nix;
                       
                     }
-                      ./overlay.nix
+                      .hosts/nixos/overlay.nix
                    ];
                   specialArgs = { inherit inputs; };
                  };
