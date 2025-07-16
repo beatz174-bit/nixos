@@ -49,4 +49,27 @@ users.users.root = {
   #Enable flakes
 
   nix.settings.experimental-features = "nix-command flakes";
+
+nix.settings = {
+  substituters = [
+    "http://nix-cache"
+    "https://cache.nixos.org/"
+  ];
+  trusted-public-keys = [
+    "nix-ccache-1:<base32‑pubkey‑hash‑from‑cache-pub.pem>"
+    "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
+  ];
+};
+
+{
+  programs.git = {
+    enable = true;
+    package = pkgs.git.override { withLibsecret = true; };
+    extraConfig = {
+      credential.helper = "libsecret";
+    };
+  };
+}
+
+
 }
