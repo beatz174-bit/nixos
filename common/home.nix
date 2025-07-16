@@ -19,7 +19,7 @@ in {
   home.stateVersion = "25.05";        # match your NixOS stateVersion
 
   programs.home-manager.enable = true;  # mandatory to activate HM
-
+  programs.bash.enable = true;
     programs.bash.aliases = {
     "Switch-nix" = mySwitchCmd;
     "Test-nix" = myTestCmd;
