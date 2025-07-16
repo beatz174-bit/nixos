@@ -51,11 +51,6 @@ users.users.root = {
 
   nix.settings.experimental-features = "nix-command flakes";
 
-services.gnome.gnome-keyring.enable = true;
-security.pam.services.login.enableGnomeKeyring = true;
-
-
-
 nix.settings = {
   substituters = [
     "http://nix-cache"
@@ -70,9 +65,9 @@ nix.settings = {
 
   programs.git = {
     enable = true;
-    package = pkgs.git.override { withLibsecret = true; };
+    package = pkgs.git;
     config = {
-      credential.helper = "/run/current-system/sw/bin/git-credential-libsecret";
+      credential.helper = "store";
     };
   };
 
