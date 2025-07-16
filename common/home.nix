@@ -1,12 +1,31 @@
 { config, pkgs, lib, ... }:
 
-{
+let
+  mySwitchCmd = ''
+    sudo nixos-rebuild switch \
+      --no-write-lock-file \
+      --refresh \
+      --flake git+https://gitea.lan.ddnsgeek.com/beatzaplenty/nixos.git#$(hostname)
+  '';
+  myTestCmd = ''
+    sudo nixos-rebuild switch \
+      --no-write-lock-file \
+      --refresh \
+      --flake git+https://gitea.lan.ddnsgeek.com/beatzaplenty/nixos.git#$(hostname)
+  '';
+in {
   home.username = "nixos";         # your actual username
   home.homeDirectory = "/home/nixos";
   home.stateVersion = "25.05";        # match your NixOS stateVersion
 
   programs.home-manager.enable = true;  # mandatory to activate HM
 
+    home.shellAliases = {
+    Switch-nix = mySwitchCmd;
+    Test-nix = myTestCmd;
+  };
+
+  
   # Optional: packages
   home.packages = with pkgs; [
     git
