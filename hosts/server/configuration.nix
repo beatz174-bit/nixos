@@ -84,7 +84,7 @@ systemd.timers.backup = {
   };
 };
 
-
+  services.openssh.PermitRootLogin = "yes";
   # Open ports in the firewall.
   networking.firewall.allowedTCPPorts = [ 2049 ];
 #  networking.firewall.allowedUDPPorts = [ 111 2049 20048 ];
