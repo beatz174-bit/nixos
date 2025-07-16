@@ -8,7 +8,7 @@ let
       --flake git+https://gitea.lan.ddnsgeek.com/beatzaplenty/nixos.git#$(hostname)
   '';
   myTestCmd = ''
-    sudo nixos-rebuild switch \
+    sudo nixos-rebuild test \
       --no-write-lock-file \
       --refresh \
       --flake git+https://gitea.lan.ddnsgeek.com/beatzaplenty/nixos.git#$(hostname)
@@ -24,7 +24,7 @@ programs.bash = {
   enable = true;
   shellAliases = {
     "Switch-nix" = mySwitchCmd;
-    "Test-nix" = mySwitchCmd;
+    "Test-nix" = myTestCmd;
   };
     initExtra = ''
     # ensure loading of aliases/session variables
