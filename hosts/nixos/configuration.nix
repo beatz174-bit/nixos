@@ -12,7 +12,7 @@ in {
       nodejs
       appimage-run
       seahorse
-#      Remove `brasero` if present
+
     ];
 
 
@@ -108,12 +108,5 @@ services.xrdp.openFirewall = true;
 #     WantedBy = [ "default.target" ];
 #   };
 # };
-  nixpkgs.overlays = [
-    (final: prev: {
-      brasero = prev.brasero.overrideAttrs (old: {
-        configureFlags = (old.configureFlags or []) ++ ["--without-dvdauthor"];
-        # Or remove dvdauthor from propagatedBuildInputs
-      });
-    })
-  ];
+
 }
