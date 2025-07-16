@@ -20,11 +20,13 @@ in {
 
   programs.home-manager.enable = true;  # mandatory to activate HM
   
-    programs.bash.shellAliases = {
-    "Switch-nix" = mySwitchCmd;
-    "Test-nix" = myTestCmd;
+programs.bash = {
+  enable = true;
+  shellAliases = {
+    switch-nix = mySwitchCmd;
+    test-nix   = mySwitchCmd;
   };
-
+};
   
   # Optional: packages
   home.packages = with pkgs; [
@@ -39,7 +41,7 @@ in {
   };
 
   # Optional: enable bash (or zsh, fish...)
-  programs.bash.enable = true;
+#  programs.bash.enable = true;
 
   # Optional: manage dotfiles via symlinks
 #  home.file = {
