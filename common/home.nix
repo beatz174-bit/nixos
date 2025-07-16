@@ -23,8 +23,8 @@ in {
 programs.bash = {
   enable = true;
   shellAliases = {
-    switch-nix = mySwitchCmd;
-    test-nix   = mySwitchCmd;
+    "switch-nix" = mySwitchCmd;
+    "test-nix" = mySwitchCmd;
   };
 };
   
