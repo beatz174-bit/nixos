@@ -48,5 +48,5 @@ users.users.root = {
 
   #Enable flakes
 
-  experimental-features = nix-command flakes
+  experimental-features = nix-command flakes;
 }
