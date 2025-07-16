@@ -23,9 +23,13 @@ in {
 programs.bash = {
   enable = true;
   shellAliases = {
-    "switch-nix" = mySwitchCmd;
-    "test-nix" = mySwitchCmd;
+    "Switch-nix" = mySwitchCmd;
+    "Test-nix" = mySwitchCmd;
   };
+    initExtra = ''
+    # ensure loading of aliases/session variables
+    [[ -f ~/.profile ]] && . ~/.profile
+  '';
 };
   
   # Optional: packages
