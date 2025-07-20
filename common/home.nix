@@ -1,36 +1,18 @@
 { config, pkgs, lib, ... }:
 
-let
-  mySwitchCmd = ''
-    sudo nixos-rebuild switch \
-      --no-write-lock-file \
-      --refresh \
-      --flake git+https://gitea.lan.ddnsgeek.com/beatzaplenty/nixos.git#$(hostname)
-  '';
-  myTestCmd = ''
-    sudo nixos-rebuild test \
-      --no-write-lock-file \
-      --refresh \
-      --flake git+https://gitea.lan.ddnsgeek.com/beatzaplenty/nixos.git#$(hostname)
-  '';
-in {
+ {
+
+  imports = [
+    ./aliases.nix
+  ];
+
   home.username = "nixos";         # your actual username
   home.homeDirectory = "/home/nixos";
   home.stateVersion = "25.05";        # match your NixOS stateVersion
 
   programs.home-manager.enable = true;  # mandatory to activate HM
   
-programs.bash = {
-  enable = true;
-  shellAliases = {
-    "Switch-nix" = mySwitchCmd;
-    "Test-nix" = myTestCmd;
-  };
-    initExtra = ''
-    # ensure loading of aliases/session variables
-    [[ -f ~/.profile ]] && . ~/.profile
-  '';
-};
+programs.bash.enable = true;
   
   home.file = {
     ".config/nix/nix.conf".text = ''
@@ -43,11 +25,12 @@ programs.bash = {
     git
     vim
     tmux
+    nano
   ];
 
   # Optional: set environment vars
   home.sessionVariables = {
-    EDITOR = "vim";
+    EDITOR = "nano";
   };
 
   # Optional: enable bash (or zsh, fish...)

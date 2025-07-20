@@ -1,6 +1,11 @@
 { config, pkgs, lib, ... }:
 
 {
+
+    imports = [
+    ../../common/aliases.nix
+  ];
+
   home.username = "nixos";         # your actual username
   home.homeDirectory = "/home/nixos";
   home.stateVersion = "25.05";        # match your NixOS stateVersion
