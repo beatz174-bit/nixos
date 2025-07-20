@@ -1,8 +1,8 @@
-# installer.nix
-{ config, pkgs, lib, ... }:
+{ lib, pkgs, modulesPath, config, ... }:
+
 {
   imports = [
-    (modulesPath + "/installer/cd-dvd/installation-cd-minimal.nix")
+    modulesPath + "/installer/cd-dvd/installation-cd-minimal.nix"
   ];
 
   networking.useDHCP = lib.mkDefault true;
@@ -12,15 +12,9 @@
   services.openssh.permitRootLogin = "yes";
 
   environment.systemPackages = with pkgs; [
-    git
-    curl
-    parted
-    e2fsprogs
-    btrfs-progs
-    util-linux
+    git curl parted e2fsprogs btrfs-progs util-linux
   ];
 
-  # Your flake source (adjust as needed)
   environment.etc."flake-url".text = "git+https://gitea.lan.ddnsgeek.com/beatzaplenty/nixos.git#nixos";
 
   systemd.services.autoInstall = {
@@ -31,11 +25,6 @@
       Type = "oneshot";
       ExecStart = pkgs.writeShellScript "auto-install.sh" ''
         set -eux
-
-        echo "Running auto-install from flake..."
-
-        # Disk prep
-
         #create MBR table
         parted /dev/sda -- mklabel msdos
         #create nixos partition
@@ -55,12 +44,7 @@
 
         #mount nixos partition
         mount /dev/disk/by-label/nixos /mnt
-
-
-        # Install system using flake
         nixos-install --flake "$(cat /etc/flake-url)" --no-root-password
-
-        echo "Installation complete, rebooting in 10s..."
         sleep 10
         reboot
       '';
