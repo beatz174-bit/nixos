@@ -9,7 +9,7 @@
   time.timeZone = "Australia/Brisbane";
 
   services.openssh.enable = true;
-  services.openssh.settings.permitRootLogin = "yes";
+  services.openssh.settings.PermitRootLogin = "yes";
 
   environment.systemPackages = with pkgs; [
     git curl parted e2fsprogs btrfs-progs util-linux
