@@ -12,7 +12,7 @@ in {
       nodejs
       appimage-run
       seahorse
-
+      vscode
     ];
 
 
