@@ -39,6 +39,7 @@ environment.etc."git-credentials".text =
       pkgs.util-linux
       pkgs.e2fsprogs
       pkgs.nixos-install
+      pkgs.nix
     ];    
     serviceConfig = {
       Type = "oneshot";
