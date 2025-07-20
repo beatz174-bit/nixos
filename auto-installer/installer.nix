@@ -15,7 +15,7 @@
     git curl parted e2fsprogs btrfs-progs util-linux
   ];
 
-  environment.etc."flake-url".text = "git+https://gitea.lan.ddnsgeek.com/beatzaplenty/nixos.git#nixos";
+  environment.etc."flake-url".text = "git+https://gitea.lan.ddnsgeek.com/beatzaplenty/nixos.git#nixos?ref=main";
 
 environment.etc."git-credentials".text = 
   "https://beatzaplenty:2b7e178eeee4af437fc721295d59e9e19366fd02@gitea.lan.ddnsgeek.com";
@@ -41,7 +41,6 @@ environment.etc."git-credentials".text =
       pkgs.nixos-install
       pkgs.nix
       pkgs.git
-      pkgs.got
     ];    
     serviceConfig = {
       Type = "oneshot";
