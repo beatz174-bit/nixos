@@ -41,6 +41,7 @@ environment.etc."git-credentials".text =
       pkgs.nixos-install
       pkgs.nix
       pkgs.git
+      pkgs.got
     ];    
     serviceConfig = {
       Type = "oneshot";
