@@ -93,7 +93,7 @@ services.xrdp.defaultWindowManager = "cinnamon-session";
 services.xrdp.openFirewall = true;
 nixpkgs.config.allowUnfree = true;
 
-services.gnome3.gnome-keyring.enable = true;
+services.gnome-keyring.enable = true;
 
 security.pam.services.lightdm.enableGnomeKeyring = true;
 
