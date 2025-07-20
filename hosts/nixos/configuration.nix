@@ -14,7 +14,7 @@ in {
       seahorse
       vscode
       p7zip
-      balena-etcher
+#      balena-etcher
       shotcut
       gimp
       pdfarranger
