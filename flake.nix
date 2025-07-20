@@ -31,7 +31,7 @@
           modules = [
             ./hosts/nixos/configuration.nix
             ./common/hardware-configuration.nix
-            winapps.nixosModule
+            inputs.winapps.nixosModule
 
             home-manager.nixosModules.home-manager {
               home-manager.useGlobalPkgs = true;
