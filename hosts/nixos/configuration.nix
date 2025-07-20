@@ -91,7 +91,7 @@ in {
 services.xrdp.enable = true;
 services.xrdp.defaultWindowManager = "cinnamon-session";
 services.xrdp.openFirewall = true;
-
+nixpkgs.config.allowUnfree = true;
 # systemd.services.nextcloud-appimage = {
 #   enable = true;
 #   Unit = {
