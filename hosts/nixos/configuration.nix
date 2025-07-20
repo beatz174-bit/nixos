@@ -21,7 +21,6 @@ in {
       terminator
       libreoffice-qt
       transmission_4-qt
-      winapps
     ];
 
 
