@@ -13,6 +13,14 @@ in {
       appimage-run
       seahorse
       vscode
+      p7zip
+      balena-etcher
+      shotcut
+      gimp
+      pdfarranger
+      terminator
+      libreoffice-qt
+      transmission_4-qt
     ];
 
 
