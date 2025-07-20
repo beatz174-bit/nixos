@@ -8,6 +8,10 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    winapps = {
+      url = "github:winapps-org/winapps/feat-nix-packaging";
+      flake = true;
+    };
   };
 
   outputs = { self, nixpkgs, nixos-conf-editor, home-manager, ... } @ inputs:
@@ -24,6 +28,7 @@
                    modules = [
                      ./hosts/nixos/configuration.nix
                      ./common/hardware-configuration.nix
+                     inputs.winapps.nixosModule
                      home-manager.nixosModules.home-manager {
                       home-manager.useGlobalPkgs = true;
                       home-manager.useUserPackages = true;
@@ -31,7 +36,16 @@
                       
                     }
                    ];
+                  configuration = {
+                    environment.systemPackages = with nixpkgs.legacyPackages.${system}; [
+                      inputs.winapps.packages.${system}.winapps
+                      inputs.winapps.packages.${system}.winapps-launcher
+                      freerdp
+                    ];
 
+                    virtualisation.libvirtd.enable = true;
+                    # other VM or RDP-related settings...
+                  };
 
 
                   specialArgs = { inherit inputs; };
