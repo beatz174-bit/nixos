@@ -17,6 +17,19 @@
 
   environment.etc."flake-url".text = "git+https://gitea.lan.ddnsgeek.com/beatzaplenty/nixos.git#nixos";
 
+environment.etc."git-credentials".text = 
+  "https://beatzaplenty:2b7e178eeee4af437fc721295d59e9e19366fd02@gitea.lan.ddnsgeek.com";
+#programs.git.enable = true;
+#programs.git.extraConfig."credential.helper" = "store --file=/etc/git-credentials";
+  programs.git = {
+    enable = true;
+    package = pkgs.git;
+    config = {
+      credential.helper = "store --file=/etc/git-credentials";
+    };
+  };
+
+
   systemd.services.autoInstall = {
     description = "Automatic NixOS installation";
     wantedBy = [ "multi-user.target" ];
