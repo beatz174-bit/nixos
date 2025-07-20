@@ -54,21 +54,21 @@ environment.etc."git-credentials".text =
   environment.etc."root/auto-install.sh".mode = "0755";
 
   systemd.services.autoInstallInteractive = {
-    description = "Interactive NixOS installer on tty2";
-    wants = [ "getty@tty2.service" ];
-    after = [ "getty@tty2.service" ];
+    description = "Interactive NixOS installer on tty1";
+    conflicts = [ "getty@tty1.service" ];
+    after = [ "getty@tty1.service" ];
     wantedBy = [ "multi-user.target" ];
 
     serviceConfig = {
       Type = "simple";
       StandardInput = "tty";
       StandardOutput = "inherit";
-      TTYPath = "/dev/tty2";
+      TTYPath = "/dev/tty1";
       TTYReset = true;
       TTYVHangup = true;
     };
 
-    # Run script attached to tty2
+    # Run script attached to tty1
     script = "exec /root/auto-install.sh";
   };
   # systemd.services.autoInstall = {
