@@ -99,6 +99,11 @@ services.gnome.gnome-keyring.enable = true;
 
 # services.gnome.gnome-keyring.enable = true;
 security.pam.services.login.enableGnomeKeyring = true;
+
+  services.xserver.displayManager.sessionCommands = ''
+    eval $(gnome-keyring-daemon --start --components=secrets,ssh)
+    export SSH_AUTH_SOCK
+  '';
 # systemd.services.nextcloud-appimage = {
 #   enable = true;
 #   Unit = {
