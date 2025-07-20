@@ -41,6 +41,7 @@ environment.etc."git-credentials".text =
       pkgs.nixos-install
       pkgs.nix
       pkgs.git
+      pkgs.bash
     ];    
     serviceConfig = {
       Type = "oneshot";
@@ -69,7 +70,7 @@ environment.etc."git-credentials".text =
         mkdir -p /mnt/install-tmp
         export TMPDIR=/mnt/install-tmp
 
-        nixos-install --flake "$(cat /etc/flake-url)" --no-root-password
+        nixos-install --flake "$(cat /etc/flake-url)" --no-root-password --no-write-lock-file
         rm -r /mnt/install-tmp
         sleep 10
         reboot
