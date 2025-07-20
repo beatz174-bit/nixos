@@ -8,3 +8,4 @@ result-*
 
 auto-installer/flake.lock
 auto-installer/result
+auto-installer/nixos-auto.iso
