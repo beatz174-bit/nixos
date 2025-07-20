@@ -34,6 +34,11 @@ environment.etc."git-credentials".text =
     description = "Automatic NixOS installation";
     wantedBy = [ "multi-user.target" ];
     after = [ "network-online.target" ];
+    path = [
+      pkgs.parted
+      pkgs.util-linux
+      pkgs.e2fsprogs
+    ];    
     serviceConfig = {
       Type = "oneshot";
       ExecStart = pkgs.writeShellScript "auto-install.sh" ''
@@ -57,10 +62,15 @@ environment.etc."git-credentials".text =
 
         #mount nixos partition
         mount /dev/disk/by-label/nixos /mnt
+      # Choose a disk-backed temp directory
+        mkdir -p /mnt/install-tmp
+        export TMPDIR=/mnt/install-tmp
+
         nixos-install --flake "$(cat /etc/flake-url)" --no-root-password
+        rm -r /mnt/install-tmp
         sleep 10
         reboot
       '';
-    };
+    };  
   };
 }
