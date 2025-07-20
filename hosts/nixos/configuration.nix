@@ -92,6 +92,12 @@ services.xrdp.enable = true;
 services.xrdp.defaultWindowManager = "cinnamon-session";
 services.xrdp.openFirewall = true;
 nixpkgs.config.allowUnfree = true;
+
+services.gnome3.gnome-keyring.enable = true;
+
+security.pam.services.lightdm.enableGnomeKeyring = true;
+
+
 # systemd.services.nextcloud-appimage = {
 #   enable = true;
 #   Unit = {
