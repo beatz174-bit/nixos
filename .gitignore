@@ -7,3 +7,4 @@ result-*
 .direnv
 
 auto-installer/flake.lock
+auto-installer/result
