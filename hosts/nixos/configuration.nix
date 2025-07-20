@@ -105,11 +105,6 @@ security.pam.services.login.enableGnomeKeyring = true;
     export SSH_AUTH_SOCK
   '';
 
-
-  security.pam.services."xrdp-sesman".text = ''
-    auth     optional pam_gnome_keyring.so
-    session  optional pam_gnome_keyring.so auto_start
-  '';
 # systemd.services.nextcloud-appimage = {
 #   enable = true;
 #   Unit = {
