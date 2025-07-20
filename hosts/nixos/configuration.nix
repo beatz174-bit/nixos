@@ -95,9 +95,10 @@ nixpkgs.config.allowUnfree = true;
 
 services.gnome.gnome-keyring.enable = true;
 
-security.pam.services.lightdm.enableGnomeKeyring = true;
+# security.pam.services.lightdm.enableGnomeKeyring = true;
 
-
+# services.gnome.gnome-keyring.enable = true;
+security.pam.services.login.enableGnomeKeyring = true;
 # systemd.services.nextcloud-appimage = {
 #   enable = true;
 #   Unit = {
