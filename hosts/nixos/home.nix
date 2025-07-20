@@ -18,6 +18,7 @@
     vim
     tmux
     nextcloud-client
+    vscode
   ];
 
   # Optional: set environment vars
