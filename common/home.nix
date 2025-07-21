@@ -1,6 +1,9 @@
 { config, pkgs, lib, ... }:
 
- {
+let
+  remote = "root@proxmox-ip:/var/lib/vz/template/iso";
+  localMount = "${config.home.homeDirectory}/proxmox-iso";
+in {
 
   imports = [
     ./aliases.nix
@@ -26,13 +29,32 @@ programs.bash.enable = true;
     vim
     tmux
     nano
+    sshfs
   ];
 
   # Optional: set environment vars
   home.sessionVariables = {
     EDITOR = "nano";
   };
+  systemd.user.services.mount-proxmox-iso = {
+    Unit = {
+      Description = "Mount Proxmox ISO dir via SSHFS";
+      After = [ "network-online.target" ];
+      Wants = [ "network-online.target" ];
+    };
 
+    Service = {
+      Type = "simple";
+      ExecStartPre = "${pkgs.coreutils}/bin/mkdir -p ${localMount}";
+      ExecStart = "${pkgs.sshfs}/bin/sshfs -o IdentityFile=${config.home.homeDirectory}/.ssh/id_ed25519,allow_other,reconnect,ServerAliveInterval=15,ServerAliveCountMax=3 root@proxmox-ip:/var/lib/vz/template/iso ${localMount}";
+      ExecStop = "${pkgs.fuse3}/bin/fusermount3 -u ${localMount}";
+      Restart = "on-failure";
+    };
+
+    Install = {
+      WantedBy = [ "default.target" ];
+    };
+  };
   # Optional: enable bash (or zsh, fish...)
 #  programs.bash.enable = true;
 

@@ -23,25 +23,25 @@
   '';
 
   # Allow mounting with user permissions (optional, see note)
-  security.wrappers.sshfs = {
-    source = "${pkgs.sshfs}/bin/sshfs";
-    owner = "nixos";
-    group = "users";
-    permissions = "4755";
+  # security.wrappers.sshfs = {
+  #   source = "${pkgs.sshfs}/bin/sshfs";
+  #   owner = "nixos";
+  #   group = "users";
+  #   permissions = "4755";
   
-  fileSystems."/mnt/proxmox-iso" = {
-    device = "root@pve:/var/lib/vz/template/iso";
-    fsType = "fuse.sshfs";
-    options = [
-      "IdentityFile=/home/nixos/.ssh/id_ed25519.pub"   # or your SSH key path
-      "allow_other"
-      "reconnect"
-      "ServerAliveInterval=15"
-      "ServerAliveCountMax=3"
-      "StrictHostKeyChecking=no"         # only if you're OK with this
-    ];
-  };
-  };
+  # fileSystems."/mnt/proxmox-iso" = {
+  #   device = "root@pve:/var/lib/vz/template/iso";
+  #   fsType = "fuse.sshfs";
+  #   options = [
+  #     "IdentityFile=/home/nixos/.ssh/id_ed25519.pub"   # or your SSH key path
+  #     "allow_other"
+  #     "reconnect"
+  #     "ServerAliveInterval=15"
+  #     "ServerAliveCountMax=3"
+  #     "StrictHostKeyChecking=no"         # only if you're OK with this
+  #   ];
+  # };
+  # };
 
 
   # Open ports in the firewall.
