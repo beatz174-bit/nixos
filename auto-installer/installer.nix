@@ -30,7 +30,7 @@ environment.etc."git-credentials".text =
   };
 
   # Write auto-install script to /root
-  environment.etc."root/auto-install.sh".text = ''
+  environment.etc."auto-install.sh".text = ''
     #!/run/current-system/sw/bin/bash
     set -eux
 
@@ -51,7 +51,7 @@ environment.etc."git-credentials".text =
     sleep 10
     reboot
   '';
-  environment.etc."root/auto-install.sh".mode = "0755";
+  environment.etc."auto-install.sh".mode = "0755";
 
   systemd.services.autoInstallInteractive = {
     description = "Interactive NixOS installer on tty1";
@@ -69,7 +69,7 @@ environment.etc."git-credentials".text =
     };
 
     # Run script attached to tty1
-    script = "exec /root/auto-install.sh";
+    script = "exec /etc/auto-install.sh";
   };
   # systemd.services.autoInstall = {
   #   description = "Automatic NixOS installation";
