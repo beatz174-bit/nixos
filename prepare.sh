@@ -17,13 +17,14 @@ swapon /dev/sda2
 
 #mount nixos partition
 mount /dev/disk/by-label/nixos /mnt
-
+export TMPDIR=/mnt/install-tmp
+mkdir -p /mnt/install-tmp
 #Generate config
-nixos-generate-config --root /mnt/
+#nixos-generate-config --root /mnt/
 
 #copy customised configuration over
-cp configuration.nix /mnt/etc/nixos/configuration.nix
+#cp configuration.nix /mnt/etc/nixos/configuration.nix
 
-nixos-install --no-root-passwd
+#nixos-install --no-root-passwd
 
-reboot
+#reboot

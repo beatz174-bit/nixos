@@ -12,6 +12,37 @@
 
   networking.hostName = "nix-minimal"; # Define your hostname.
 
+  environment.systemPackages = with pkgs; [
+    sshfs
+    fuse3 # needed for modern sshfs
+  ];
+
+  # Enable FUSE (if not already)
+  boot.extraModprobeConfig = ''
+    options fuse user_allow_other
+  '';
+
+  # Allow mounting with user permissions (optional, see note)
+  security.wrappers.sshfs = {
+    source = "${pkgs.sshfs}/bin/sshfs";
+    owner = "nixos";
+    group = "users";
+    permissions = "4755";
+  
+  fileSystems."/mnt/proxmox-iso" = {
+    device = "root@pve:/var/lib/vz/template/iso";
+    fsType = "fuse.sshfs";
+    options = [
+      "IdentityFile=/home/nixos/.ssh/id_ed25519.pub"   # or your SSH key path
+      "allow_other"
+      "reconnect"
+      "ServerAliveInterval=15"
+      "ServerAliveCountMax=3"
+      "StrictHostKeyChecking=no"         # only if you're OK with this
+    ];
+  };
+  };
+
 
   # Open ports in the firewall.
 #  networking.firewall.allowedTCPPorts = [ 80 8080 443 ];
