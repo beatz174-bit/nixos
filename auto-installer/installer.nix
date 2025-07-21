@@ -37,10 +37,10 @@ environment.etc."git-credentials".text =
     mkdir -p /mnt/install-tmp
     export TMPDIR=/mnt/install-tmp
 
-    parted /dev/sda -- mklabel msdos
-    parted /dev/sda -- mkpart primary 1MB -8GB
-    parted /dev/sda -- set 1 boot on
-    parted /dev/sda -- mkpart primary linux-swap -8GB 100%
+    parted -s /dev/sda -- mklabel msdos
+    parted -s /dev/sda -- mkpart primary 1MB -8GB
+    parted -s /dev/sda -- set 1 boot on
+    parted -s /dev/sda -- mkpart primary linux-swap -8GB 100%
     mkfs.ext4 -L nixos /dev/sda1
     mkswap -L swap /dev/sda2
     swapon /dev/sda2
@@ -53,20 +53,33 @@ environment.etc."git-credentials".text =
   '';
   environment.etc."auto-install.sh".mode = "0755";
 
-  systemd.services.autoInstallInteractive = {
-    description = "Interactive NixOS installer on tty1";
-    conflicts = [ "getty@tty1.service" ];
-    after = [ "getty@tty1.service" ];
-    wantedBy = [ "multi-user.target" ];
+  # systemd.services.autoInstallInteractive = {
+  #   description = "Interactive NixOS installer on tty1";
+  #   conflicts = [ "getty@tty1.service" ];
+  #   after = [ "getty@tty1.service" ];
+  #   wantedBy = [ "multi-user.target" ];
 
-    serviceConfig = {
-      Type = "simple";
-      StandardInput = "tty";
-      StandardOutput = "inherit";
-      TTYPath = "/dev/tty1";
-      TTYReset = true;
-      TTYVHangup = true;
-    };
+  #   serviceConfig = {
+  #     Type = "simple";
+  #     StandardInput = "tty";
+  #     StandardOutput = "inherit";
+  #     TTYPath = "/dev/tty1";
+  #     TTYReset = true;
+  #     TTYVHangup = true;
+  #   };
+
+systemd.services."autovt@tty1" = {
+  description = "Run installer script on TTY1";
+  after = [ "getty@tty1.service" ];
+  wantedBy = [ "multi-user.target" ];
+
+  serviceConfig = {
+    ExecStart = [ "" "@${pkgs.util-linux}/sbin/agetty" "agetty --noclear --autologin root --login-program /etc/auto-install.sh %I $TERM" ];
+    Type = "idle";  # wait for console initialization
+    Restart = "no";
+  };
+
+
     path = [
       pkgs.bash
       pkgs.parted
@@ -76,7 +89,7 @@ environment.etc."git-credentials".text =
       pkgs.git
     ];
     # Run script attached to tty1
-    script = "exec /etc/auto-install.sh";
+#    script = "exec /etc/auto-install.sh";
   };
   # systemd.services.autoInstall = {
   #   description = "Automatic NixOS installation";
