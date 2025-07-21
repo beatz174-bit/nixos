@@ -67,7 +67,14 @@ environment.etc."git-credentials".text =
       TTYReset = true;
       TTYVHangup = true;
     };
-
+    path = [
+      pkgs.bash
+      pkgs.parted
+      pkgs.util-linux
+      pkgs.e2fsprogs
+      pkgs.nixos-install
+      pkgs.git
+    ];
     # Run script attached to tty1
     script = "exec /etc/auto-install.sh";
   };
