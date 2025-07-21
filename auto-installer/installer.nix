@@ -3,6 +3,7 @@
 {
   imports = [
     "${modulesPath}/installer/cd-dvd/installation-cd-minimal.nix"
+    "../common/configuration.nix"
   ];
 
   networking.useDHCP = lib.mkDefault true;
@@ -53,6 +54,16 @@ environment.etc."git-credentials".text =
   '';
   environment.etc."auto-install.sh".mode = "0755";
 
+environment.etc."nixos/.bash_profile".text = ''
+  if [[ $- == *i* ]]; then
+    echo "Launching installer script..."
+    sudo /etc/auto-install.sh
+    mv ~/.bash_profile ~/.bash_profile.done 2>/dev/null || true
+    exit
+  fi
+'';
+environment.etc."nixos/.bash_profile".mode = "0755";
+
   # systemd.services.autoInstallInteractive = {
   #   description = "Interactive NixOS installer on tty1";
   #   conflicts = [ "getty@tty1.service" ];
@@ -68,26 +79,26 @@ environment.etc."git-credentials".text =
   #     TTYVHangup = true;
   #   };
 
-systemd.services."autovt@tty1" = {
-  description = "Run installer script on TTY1";
-  after = [ "getty@tty1.service" ];
-  wantedBy = [ "multi-user.target" ];
+# systemd.services."autovt@tty1" = {
+#   description = "Run installer script on TTY1";
+#   after = [ "getty@tty1.service" ];
+#   wantedBy = [ "multi-user.target" ];
 
-  serviceConfig = {
-    ExecStart = [ "" "@${pkgs.util-linux}/sbin/agetty" "agetty --noclear --autologin root --login-program /etc/auto-install.sh %I $TERM" ];
-    Type = "idle";  # wait for console initialization
-    Restart = "no";
-  };
+#   serviceConfig = {
+#     ExecStart = [ "" "@${pkgs.util-linux}/sbin/agetty" "agetty --noclear --autologin root --login-program /etc/auto-install.sh %I $TERM" ];
+#     Type = "idle";  # wait for console initialization
+#     Restart = "no";
+#   };
 
 
-    path = [
-      pkgs.bash
-      pkgs.parted
-      pkgs.util-linux
-      pkgs.e2fsprogs
-      pkgs.nixos-install
-      pkgs.git
-    ];
+#     path = [
+#       pkgs.bash
+#       pkgs.parted
+#       pkgs.util-linux
+#       pkgs.e2fsprogs
+#       pkgs.nixos-install
+#       pkgs.git
+#     ];
     # Run script attached to tty1
 #    script = "exec /etc/auto-install.sh";
   };
