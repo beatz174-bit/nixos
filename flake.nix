@@ -8,15 +8,11 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    sops-nix.url = "github:Mic92/sops-nix";
   };
 
-  outputs = { self, nixpkgs, nixos-conf-editor, home-manager, ... } @ inputs:
+  outputs = { self, nixpkgs, nixos-conf-editor, home-manager, sops-nix, ... } @ inputs:
     let system = "x86_64-linux"; in {
-      nixConfig = {
-        access-tokens = [
-          "github.com=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"
-        ];
-      };           
       nixosConfigurations = {
         # automatically use each host folder by name
         nixos    = nixpkgs.lib.nixosSystem {
@@ -24,26 +20,26 @@
                    modules = [
                      ./hosts/nixos/configuration.nix
                      ./common/hardware-configuration.nix
+                     sops-nix.nixosModules.sops
                      home-manager.nixosModules.home-manager {
                       home-manager.useGlobalPkgs = true;
                       home-manager.useUserPackages = true;
+                      home-manager.sharedModules = [ sops-nix.homeManagerModules.sops ];
                       home-manager.users.nixos = import ./hosts/nixos/home.nix;
-                      
                     }
                    ];
-
-
-
-                  specialArgs = { inherit inputs; };
+                   specialArgs = { inherit inputs; };
                  };
         docker = nixpkgs.lib.nixosSystem {
                    inherit system;
                    modules = [
                      ./hosts/docker/configuration.nix
                      ./common/hardware-configuration.nix
+                     sops-nix.nixosModules.sops
                      home-manager.nixosModules.home-manager {
                       home-manager.useGlobalPkgs = true;
                       home-manager.useUserPackages = true;
+                      home-manager.sharedModules = [ sops-nix.homeManagerModules.sops ];
                       home-manager.users.nixos = import ./common/home.nix;
                     }
                    ];
@@ -53,9 +49,11 @@
                    modules = [
                      ./hosts/server/configuration.nix
                      ./common/hardware-configuration.nix
+                     sops-nix.nixosModules.sops
                      home-manager.nixosModules.home-manager {
                       home-manager.useGlobalPkgs = true;
                       home-manager.useUserPackages = true;
+                      home-manager.sharedModules = [ sops-nix.homeManagerModules.sops ];
                       home-manager.users.nixos = import ./common/home.nix;
                     }
                    ];
@@ -65,26 +63,30 @@
                    modules = [
                      ./hosts/nix-cache/configuration.nix
                      ./common/hardware-configuration.nix
+                     sops-nix.nixosModules.sops
                      home-manager.nixosModules.home-manager {
                       home-manager.useGlobalPkgs = true;
                       home-manager.useUserPackages = true;
+                      home-manager.sharedModules = [ sops-nix.homeManagerModules.sops ];
                       home-manager.users.nixos = import ./common/home.nix;
                     }
                    ];
-        
+
                  };
         nix-minimal = nixpkgs.lib.nixosSystem {
                    inherit system;
                    modules = [
                      ./hosts/nix-minimal/configuration.nix
                      ./common/hardware-configuration.nix
+                     sops-nix.nixosModules.sops
                      home-manager.nixosModules.home-manager {
                       home-manager.useGlobalPkgs = true;
                       home-manager.useUserPackages = true;
+                      home-manager.sharedModules = [ sops-nix.homeManagerModules.sops ];
                       home-manager.users.nixos = import ./common/home.nix;
                     }
                    ];
-        
+
                  };
       };
     };

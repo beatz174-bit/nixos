@@ -17,10 +17,14 @@ in {
   
 programs.bash.enable = true;
   
+  sops.secrets.nix_conf = {
+    sopsFile = ../secrets/nix.conf.sops;
+    owner = config.home.username;
+    mode = "0400";
+  };
+
   home.file = {
-    ".config/nix/nix.conf".text = ''
-      access-tokens = github.com=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
-    '';
+    ".config/nix/nix.conf".source = config.sops.secrets.nix_conf.path;
   };
 
   # Optional: packages
