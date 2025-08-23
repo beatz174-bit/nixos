@@ -17,14 +17,14 @@ in {
   
 programs.bash.enable = true;
   
-  sops.secrets.nix_conf = {
-    sopsFile = ../secrets/nix.conf.sops;
+  sops.secrets.github-token = {
+    sopsFile = ../secrets/github-token.sops;
     owner = config.home.username;
     mode = "0400";
   };
 
   home.file = {
-    ".config/nix/nix.conf".source = config.sops.secrets.nix_conf.path;
+    ".config/nix/nix.conf".text = ''access-tokens = github.com=''config.sops.secrets.github-token.path
   };
 
   # Optional: packages
