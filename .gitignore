@@ -2,3 +2,4 @@ secrets/*
 !secrets/*.sops
 !secrets/README.md
 age.key
+secrets.yaml
