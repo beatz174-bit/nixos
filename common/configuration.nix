@@ -56,9 +56,9 @@ sops.age.sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
       tree
     ];
     hashedPasswordFile = config.sops.secrets."nixos-users-password".path;
-    openssh.authorizedKeys.keys = [
-    config.sops.secrets."openssh-authorised-keys".path
-  ];
+    openssh.authorizedKeys.keyFiles = [
+      config.sops.secrets."openssh-authorised-keys".path
+    ];
   };
 
 
