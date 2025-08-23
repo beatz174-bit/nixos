@@ -27,7 +27,7 @@ programs.bash.enable = true;
   };
 
   home.file = {
-    ".config/nix/nix.conf".text = ''access-tokens = github.com=''config.sops.secrets.github-token.path
+    ".config/nix/nix.conf".text = ''access-tokens = github.com=''config.sops.secrets.github-token.path;
   };
 
   # Optional: packages
