@@ -37,7 +37,6 @@
 sops.defaultSopsFile = ../secrets.enc.yaml;
 sops.secrets = {
   nixos-users-password = {};
-  openssh-authorised-keys = { owner = "nixos"; };
   github-token = {};
 };
 
@@ -57,7 +56,7 @@ sops.age.sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
     ];
     hashedPasswordFile = config.sops.secrets."nixos-users-password".path;
     openssh.authorizedKeys.keyFiles = [
-      config.sops.secrets."openssh-authorised-keys".path
+      ./nixos-authorized_keys
     ];
   };
 
