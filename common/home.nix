@@ -20,11 +20,11 @@ sops.age.sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
 
 programs.bash.enable = true;
   
-  sops.secrets.github-token = {
-    sopsFile = ../secrets/github-token.sops;
-    owner = config.home.username;
-    mode = "0400";
-  };
+  # sops.secrets.github-token = {
+  #   sopsFile = ../secrets/github-token.sops;
+  #   owner = config.home.username;
+  #   mode = "0400";
+  # };
 
   # home.file = {
   #   ".config/nix/nix.conf".text = ''access-tokens = github.com=''config.sops.secrets.github-token.path;
