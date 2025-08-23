@@ -25,14 +25,21 @@
   git
   gcr
   ];
-#Set root password
-  sops.secrets.nixos-users-password = {
-    sopsFile = ../secrets/nixos-users-password.sops;
-  };
-  sops.secrets.openssh-authorised-keys = {
-    sopsFile = ../secrets/openssh-authorised-keys.sops;
-    owner = "nixos";
-  };
+# #Set root password
+#   sops.secrets.nixos-users-password = {
+#     sopsFile = ../secrets/nixos-users-password.sops;
+#   };
+#   sops.secrets.openssh-authorised-keys = {
+#     sopsFile = ../secrets/openssh-authorised-keys.sops;
+#     owner = "nixos";
+#   };
+
+sops.defaultSopsFile = ../secrets.enc.yaml;
+sops.secrets = {
+  nixos-users-password = {};
+  openssh-authorised-keys = { owner = "nixos"; };
+  github-token = {};
+};
 
   users.users.root.hashedPasswordFile = config.sops.secrets."nixos-users-password".path;
 
