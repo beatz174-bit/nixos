@@ -44,6 +44,8 @@ sops.secrets = {
 # Derive Age keys from the host SSH key instead of a separate age.key
 sops.age.sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
 
+  users.mutableUsers = false;
+
   users.users.root.hashedPasswordFile = config.sops.secrets."nixos-users-password".path;
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
