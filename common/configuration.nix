@@ -45,7 +45,7 @@ sops.age.sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
 
   users.mutableUsers = false;
 
-  users.users.root.hashedPasswordFile = config.sops.secrets."nixos-users-password";
+  users.users.root.hashedPasswordFile = config.sops.secrets.nixos-users-password.value;
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.nixos = {
@@ -54,7 +54,7 @@ sops.age.sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
     packages = with pkgs; [
       tree
     ];
-    hashedPasswordFile = config.sops.secrets."nixos-users-password";
+    hashedPasswordFile = config.sops.secrets.nixos-users-password.value;
     openssh.authorizedKeys.keyFiles = [
       ./nixos-authorized_keys
     ];
