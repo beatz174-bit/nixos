@@ -1,11 +1,4 @@
-# ---> Nix
-# Ignore build outputs from performing a nix-build or `nix build` command
-result
-result-*
-
-# Ignore automatically generated direnv output
-.direnv
-
-auto-installer/flake.lock
-auto-installer/result
-auto-installer/nixos-auto.iso
+secrets/*
+!secrets/*.sops
+!secrets/README.md
+age.key
