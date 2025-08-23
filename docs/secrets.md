@@ -6,14 +6,25 @@ values such as GitHub tokens and user password hashes.
 ## Setup
 
 1. Install `sops` and `age`.
-2. Generate an `age` key:
+2. Derive the Age key from the host's SSH key by adding to your NixOS configuration:
 
-   ```bash
-   age-keygen -o age.key
+   ```nix
+   sops.age.sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
+   services.openssh = {
+     enable = true;
+     hostKeys = [{
+       path = "/etc/ssh/ssh_host_ed25519_key";
+       type = "ed25519";
+     }];
+   };
    ```
 
-   The command prints the public key; copy it into `.sops.yaml` under
-   `age:`.
+   This ensures an Ed25519 host key is generated if it does not already exist.
+   To manually create one:
+
+   ```bash
+   sudo ssh-keygen -t ed25519 -N '' -f /etc/ssh/ssh_host_ed25519_key
+   ```
 
 3. Encrypt secrets:
 
@@ -24,7 +35,7 @@ values such as GitHub tokens and user password hashes.
    ```
 
    Enter the GitHub token and password hashes when prompted.
-4. Commit the encrypted `.sops` files but never commit the generated `age.key`.
+4. Commit the encrypted `.sops` files. The host's SSH key stays on the machine and is not committed.
 
 ## Rotating secrets
 

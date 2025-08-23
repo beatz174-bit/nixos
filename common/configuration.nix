@@ -41,6 +41,9 @@ sops.secrets = {
   github-token = {};
 };
 
+# Derive Age keys from the host SSH key instead of a separate age.key
+sops.age.sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
+
   users.users.root.hashedPasswordFile = config.sops.secrets."nixos-users-password".path;
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
@@ -57,8 +60,16 @@ sops.secrets = {
   };
 
 
-  # Enable the OpenSSH daemon.
-  services.openssh.enable = true;
+  # Enable the OpenSSH daemon and ensure an Ed25519 host key exists.
+  services.openssh = {
+    enable = true;
+    hostKeys = [
+      {
+        path = "/etc/ssh/ssh_host_ed25519_key";
+        type = "ed25519";
+      }
+    ];
+  };
 
   #Enable flakes
 

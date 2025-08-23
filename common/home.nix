@@ -14,7 +14,10 @@ in {
   home.stateVersion = "25.05";        # match your NixOS stateVersion
 
   programs.home-manager.enable = true;  # mandatory to activate HM
-  
+
+# Derive Age keys from the host SSH key
+sops.age.sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
+
 programs.bash.enable = true;
   
   sops.secrets.github-token = {
