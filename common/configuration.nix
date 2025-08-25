@@ -34,7 +34,7 @@
 #     owner = "nixos";
 #   };
 
-sops.defaultSopsFile = ../secrets.enc.yaml;
+sops.defaultSopsFile = ../secrets/secrets.enc.yaml;
 sops.secrets = {
   nixos-users-password = {
     neededForUsers = true;

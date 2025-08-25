@@ -1,5 +1,6 @@
 secrets/*
 !secrets/*.sops
 !secrets/README.md
+!secrets.enc.yaml
 age.key
 secrets.yaml
