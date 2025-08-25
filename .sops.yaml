@@ -1,6 +1,6 @@
 keys:
   - &server age144nj693fe8wavdzgxwkfn59e33gpug289w8q405yckr3cnmpd5dqeevnlg
-  - &test_vm age1hex68jup5q4yjzxxpklxjl5yt69t42e2l0r6td9q3ns2uv0j4chsnwsuz6
+  - &test_vm age1jvgek0c6lazvrxcs9g5rhwl8qfsjnmtt26ttq0zyvl8uwu2l5yasdyxkv4
 creation_rules:
   - path_regex: secrets/[^/]+\.(yaml|json|env|ini)$
     key_groups:
