@@ -40,7 +40,7 @@ sops.secrets = {
     neededForUsers = true;
     mode = "0440";
     owner = "nixos";
-    group = "users"
+    group = "users";
   };
   github-token = {};
 };
