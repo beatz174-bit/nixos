@@ -38,6 +38,9 @@ sops.defaultSopsFile = ../secrets.enc.yaml;
 sops.secrets = {
   nixos-users-password = {
     neededForUsers = true;
+    mode = "0440";
+    owner = "nixos";
+    group = "users"
   };
   github-token = {};
 };
